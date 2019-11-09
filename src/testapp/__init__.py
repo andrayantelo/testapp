@@ -6,10 +6,8 @@ from flask_sqlalchemy import SQLAlchemy
 from .views import main
 
 # instantiate the database object
-try:
-    db = SQLAlchemy()
-except Exception as e:
-    return 'can not initialize db', 500
+db = SQLAlchemy()
+
 
 def create_app():
     try:
