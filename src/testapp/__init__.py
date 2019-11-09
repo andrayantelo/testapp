@@ -3,10 +3,12 @@ from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 
-
+from .models import Comment
 
 # instantiate the database object
 db = SQLAlchemy()
+
+from .views import main
 
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
@@ -17,10 +19,8 @@ def create_app():
     
     @app.before_first_request
     def create_tables():
-        from .models import Comment
         db.create_all()
     
-    from .views import main
     
     app.register_blueprint(main)
     
