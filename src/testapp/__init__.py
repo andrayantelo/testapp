@@ -11,23 +11,24 @@ db = SQLAlchemy()
 from .views import main
 
 def create_app():
-    app = Flask(__name__, instance_relative_config=True)
-    app.config['SECRET_KEY'] = 'DontTellAnyone'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///instance/db.sqlite3'
-    
-    db.init_app(app)
-    
-    @app.before_first_request
-    def create_tables():
-        db.create_all()
-    
-    
-    app.register_blueprint(main)
-    
-    Bootstrap(app)
-    
-    return app
-
-
+    try:
+        app = Flask(__name__, instance_relative_config=True)
+        app.config['SECRET_KEY'] = 'DontTellAnyone'
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../instance/db.sqlite3'
+        
+        db.init_app(app)
+        
+        @app.before_first_request
+        def create_tables():
+            from .models import Comment
+            db.create_all()
+        
+        app.register_blueprint(main)
+        
+        Bootstrap(app)
+        
+        return app
+    except Exception as e:
+        return "Error in create_app: {}".format(e), 500
 
 
