@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Portal{% endblock %}
+
+{% block content %}
+    <p>Welcome to this website. Here is the guest book:</p>
+    {% for comment in comments %}
+    <div>
+        <h1>{{ comment.name }}</h1>
+    </div>
+    <div>
+        <p>{{ comment.comment_text }}</p>
+    </div>
+    {% endfor %}
+{% endblock %}

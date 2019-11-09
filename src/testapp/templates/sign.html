@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Form{% endblock %}
+
+{% block content %}
+<div class="container">
+    <form method="POST" action="/sign">
+        {{ form.csrf_token }}
+        {{ wtf.form_field(form.name) }}
+        {{ wtf.form_field(form.comment) }}
+        <input class="btn btn-primary" type="submit" value="Submit">
+    </form>
+</div>
+{% endblock %}
