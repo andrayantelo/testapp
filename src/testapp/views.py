@@ -16,25 +16,40 @@ class RegistrationForm(FlaskForm):
 
 @main.route('/')
 def index():
-    return render_template('base.html')
+    return 'Ok', 200
+    try:
+        return render_template('base.html')
+    except Exception as e:
+        return "Error in '/': {}".format(e), 500
+        
+@main.route('/ok', methods=['GET'])
+def ok():
+    return 'OK', 200
     
 @main.route('/home')
 def home():
-    comments = Comment.query.all()
-    return render_template('home.html', comments=comments)
+    try:
+        comments = Comment.query.all()
+        return render_template('home.html', comments=comments)
+    except Exception as e:
+        return "Error in '/home': {}".format(e), 500
     
 @main.route('/sign', methods=['GET', 'POST'])
 def sign():
-    form = RegistrationForm()
-    if not form.validate_on_submit:
+    try:
+        form = RegistrationForm()
+        if not form.validate_on_submit:
+            return render_template('sign.html', form=form)
+        if form.validate_on_submit():
+            name = request.form.get('name')
+            comment = request.form.get('comment')
+            
+            new_comment = Comment(name=name, comment_text=comment)
+            db.session.add(new_comment)
+            db.session.commit()
+            
+            return redirect(url_for('main.home'))
         return render_template('sign.html', form=form)
-    if form.validate_on_submit():
-        name = request.form.get('name')
-        comment = request.form.get('comment')
-        
-        new_comment = Comment(name=name, comment_text=comment)
-        db.session.add(new_comment)
-        db.session.commit()
-        
-        return redirect(url_for('main.home'))
-    return render_template('sign.html', form=form)
+    except Exception as e:
+        return "Error in '/sign': {}".format(e), 500
+    
