@@ -3,7 +3,7 @@ instance
 
 # Python junk
 __pycache__
-env
+test_env
 *.egg-info
 
 # Vim files
