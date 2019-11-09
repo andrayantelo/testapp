@@ -10,7 +10,7 @@ setup(name='testapp',
       url='https://github.com/andrayantelo/testapp',
       description="A simple guestbook",
       py_modules=['testapp'],
-      install_requires=[flask, flask-wtf, flask-bootstrap, flask-sqlalchemy],
+      install_requires=['flask', 'flask-wtf', 'flask-bootstrap', 'flask-sqlalchemy'],
       classifiers=[
           "Development Status :: 3 - Alpha",
           ],
